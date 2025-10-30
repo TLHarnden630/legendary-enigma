@@ -1,0 +1,35 @@
+### OS / Editor / Virtualenv ignores
+# Python
+.venv/
+pyvenv.cfg
+__pycache__/
+*.py[cod]
+pip-wheel-metadata/
+*.egg-info/
+
+# Node
+node_modules/
+
+# Editor/IDE
+.vscode/
+.vs/
+
+# Build / caches
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+dist/
+build/
+__pycache__/
+
+# Misc
+*.log
+*.zip
+*.tar.gz
+
+# Ignore OneDrive/VS caches that shouldn't be in git
+.vs/ 
+.vscode/
+.idea/
