@@ -35,14 +35,14 @@ jobs:
 
           # Python linting: prefer ruff, fall back to flake8
           if ls **/*.py >/dev/null 2>&1; then
-            python -m pip install --upgrade pip || true
-            python -m pip install ruff flake8 --quiet || true
+            python -m pip install --upgrade pip
+            python -m pip install ruff flake8 --quiet
             if command -v ruff >/dev/null 2>&1; then
               echo "Running ruff"
-              ruff check . || true
+              ruff check .
             else
               echo "Running flake8"
-              flake8 . || true
+              flake8 .
             fi
             did_any=true
           fi
@@ -50,7 +50,7 @@ jobs:
           # Node linting
           if [ -f package.json ]; then
             npm ci --silent
-            npm run lint --if-present || true
+            npm run lint --if-present
             did_any=true
           fi
 
@@ -87,11 +87,11 @@ jobs:
           if [ -f requirements.txt ]; then
             echo "Python tests: installing requirements"
             python -m pip install --upgrade pip
-            python -m pip install -r requirements.txt || true
-            # run pytest with coverage if pytest is available
+            python -m pip install -r requirements.txt
+            # run pytest with coverage; this will fail the job if tests fail
             if command -v pytest >/dev/null 2>&1; then
               echo "Running pytest with coverage"
-              pytest --maxfail=1 --disable-warnings -q --cov=. --cov-report=xml --cov-report=html || true
+              pytest --maxfail=1 --disable-warnings -q --cov=. --cov-report=xml --cov-report=html
               if [ -d htmlcov ]; then
                 cp -r htmlcov ci-artifacts/htmlcov || true
               fi
@@ -106,8 +106,8 @@ jobs:
 
           if [ -f package.json ]; then
             echo "Node tests: installing"
-            npm ci --silent || true
-            npm test --if-present || true
+            npm ci --silent
+            npm test --if-present
             # copy common coverage dirs if present
             if [ -d coverage ]; then
               cp -r coverage ci-artifacts/coverage-node || true
