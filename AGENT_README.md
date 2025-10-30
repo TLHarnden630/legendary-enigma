@@ -1,3 +1,11 @@
+# Agent scripts and local maintenance
+
+[![CI](https://github.com/TLHarnden630/legendary-enigma/actions/workflows/ci.yml/badge.svg)](https://github.com/TLHarnden630/legendary-enigma/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/TLHarnden630/legendary-enigma/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/TLHarnden630/legendary-enigma/actions/workflows/codeql-analysis.yml)
+[![Artifacts](https://img.shields.io/badge/artifacts-latest-blue)](https://github.com/TLHarnden630/legendary-enigma/actions/workflows/ci.yml)
+
+This document describes the agent helper scripts included in the repository and how to use them locally. The badges above link to the CI and CodeQL workflow pages; the "Artifacts" badge links to the CI workflow where build/test artifacts appear for the latest runs (an artifact will appear after a successful workflow run).
+
 # Agent Scripts & Quick Actions
 
 This repository includes a small set of helper PowerShell scripts under `scripts/` that provide an interactive and non-interactive menu for common repository maintenance and repair tasks.
