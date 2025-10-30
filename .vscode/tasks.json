@@ -1,0 +1,191 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Agent: Open Menu",
+      "type": "shell",
+      "command": "pwsh",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        ".\\scripts\\agent-actions.ps1"
+      ],
+      "presentation": { "echo": true, "reveal": "always" }
+    },
+    {
+      "label": "Agent: Winget Manager",
+      "type": "shell",
+      "command": "pwsh",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", ".\\scripts\\winget-menu.ps1"],
+      "presentation": { "echo": true, "reveal": "always" }
+    },
+    {
+      "label": "Agent: Recreate Python venv",
+      "type": "shell",
+      "command": "pwsh",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-Command",
+        "python -m venv .venv; .\\.venv\\Scripts\\Activate.ps1; python -m pip install --upgrade pip; if (Test-Path requirements.txt) { pip install -r requirements.txt }"
+      ],
+      "presentation": { "echo": true, "reveal": "always" }
+    },
+    {
+      "label": "Agent: npm install",
+      "type": "shell",
+      "command": "pwsh",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "npm ci"],
+      "presentation": { "echo": true, "reveal": "always" }
+    },
+    {
+      "label": "Agent: npm test",
+      "type": "shell",
+      "command": "pwsh",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "npm test"],
+      "presentation": { "echo": true, "reveal": "always" },
+      "group": "test"
+    },
+    {
+      "label": "Agent: Scan files",
+      "type": "shell",
+      "command": "pwsh",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", ".\\scripts\\agent-actions.ps1", "-Action", "scan-files", "-NonInteractive"],
+      "presentation": { "echo": true, "reveal": "always" }
+    },
+    {
+      "label": "Agent: Open AGENT_README",
+      "type": "shell",
+      "command": "pwsh",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "if (Test-Path AGENT_README.md) { code AGENT_README.md } else { Write-Host 'AGENT_README.md not found' }"],
+      "presentation": { "echo": true, "reveal": "always" }
+    }
+  ]
+}
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Agent: Open interactive menu",
+      "type": "shell",
+      "command": "pwsh",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "${workspaceFolder}\\scripts\\agent-actions.ps1"
+      ],
+      "presentation": { "echo": true, "reveal": "always", "focus": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "Agent: Git fetch/prune (non-interactive)",
+      "type": "shell",
+      "command": "pwsh",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "${workspaceFolder}\\scripts\\agent-actions.ps1",
+        "-Action",
+        "git-fetch-prune",
+        "-NonInteractive"
+      ],
+      "presentation": { "echo": true, "reveal": "silent", "focus": false },
+      "problemMatcher": []
+    },
+    {
+      "label": "Agent: Winget manager",
+      "type": "shell",
+      "command": "pwsh",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "${workspaceFolder}\\scripts\\winget-menu.ps1"
+      ],
+      "presentation": { "echo": true, "reveal": "always", "focus": true },
+      "problemMatcher": []
+    }
+    ,
+    {
+      "label": "Agent: Recreate Python venv",
+      "type": "shell",
+      "command": "pwsh",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-Command",
+        "if (Test-Path \"${workspaceFolder}\\requirements.txt\") { python -m venv .venv; .\\.venv\\Scripts\\Activate.ps1; python -m pip install --upgrade pip; python -m pip install -r requirements.txt } else { Write-Host 'No requirements.txt found; create .venv manually' }"
+      ],
+      "presentation": { "echo": true, "reveal": "always", "focus": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "Agent: npm install",
+      "type": "shell",
+      "command": "pwsh",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-Command",
+        "if (Test-Path \"${workspaceFolder}\\package.json\") { npm ci } else { Write-Host 'No package.json found' }"
+      ],
+      "presentation": { "echo": true, "reveal": "silent", "focus": false },
+      "problemMatcher": []
+    },
+    {
+      "label": "Agent: npm test",
+      "type": "shell",
+      "command": "pwsh",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-Command",
+        "if (Test-Path \"${workspaceFolder}\\package.json\") { npm test } else { Write-Host 'No package.json found' }"
+      ],
+      "presentation": { "echo": true, "reveal": "always", "focus": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "Agent: Scan repo files",
+      "type": "shell",
+      "command": "pwsh",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "${workspaceFolder}\\scripts\\agent-actions.ps1",
+        "-Action",
+        "scan-files",
+        "-NonInteractive"
+      ],
+      "presentation": { "echo": true, "reveal": "silent", "focus": false },
+      "problemMatcher": []
+    },
+    {
+      "label": "Agent: Open AGENT_README",
+      "type": "shell",
+      "command": "pwsh",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-Command",
+        "code ${workspaceFolder}\\AGENT_README.md"
+      ],
+      "presentation": { "echo": true, "reveal": "silent", "focus": false },
+      "problemMatcher": []
+    }
+  ]
+}
