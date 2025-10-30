@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Run repository checks
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "Starting CI checks"
+
+          did_any=false
+
+          if [ -f requirements.txt ]; then
+            echo "Found requirements.txt — running Python steps"
+            python -m pip install --upgrade pip
+            python -m pip install -r requirements.txt
+            if command -v pytest >/dev/null 2>&1; then
+              echo "Running pytest"
+              pytest
+            else
+              echo "pytest not available — skipping python tests"
+            fi
+            did_any=true
+          fi
+
+          if [ -f package.json ]; then
+            echo "Found package.json — running Node steps"
+            npm ci
+            echo "Running npm test"
+            npm test --if-present
+            did_any=true
+          fi
+
+          if [ "$did_any" = false ]; then
+            echo "No Python or Node manifests found — nothing to do"
+          fi
+
+          echo "CI checks complete"
