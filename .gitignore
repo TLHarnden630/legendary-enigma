@@ -33,3 +33,6 @@ __pycache__/
 .vs/ 
 .vscode/
 .idea/
+
+# Allow checking in the VS Code tasks file for this repo (we still ignore other .vscode files)
+!.vscode/tasks.json
