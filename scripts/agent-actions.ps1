@@ -253,4 +253,4 @@ while ($true) {
     }
 }
 
-Write-Host "Goodbye." -ForegroundColor Green
+Write-Host "SeeYa!" -ForegroundColor Cyan

@@ -62,12 +62,7 @@
       "command": "pwsh",
       "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "if (Test-Path AGENT_README.md) { code AGENT_README.md } else { Write-Host 'AGENT_README.md not found' }"],
       "presentation": { "echo": true, "reveal": "always" }
-    }
-  ]
-}
-{
-  "version": "2.0.0",
-  "tasks": [
+    },
     {
       "label": "Agent: Open interactive menu",
       "type": "shell",
@@ -112,10 +107,9 @@
       ],
       "presentation": { "echo": true, "reveal": "always", "focus": true },
       "problemMatcher": []
-    }
-    ,
+    },
     {
-      "label": "Agent: Recreate Python venv",
+      "label": "Agent: Recreate Python venv (workspace-safe)",
       "type": "shell",
       "command": "pwsh",
       "args": [
@@ -129,7 +123,7 @@
       "problemMatcher": []
     },
     {
-      "label": "Agent: npm install",
+      "label": "Agent: npm install (workspace-safe)",
       "type": "shell",
       "command": "pwsh",
       "args": [
@@ -143,7 +137,7 @@
       "problemMatcher": []
     },
     {
-      "label": "Agent: npm test",
+      "label": "Agent: npm test (workspace-safe)",
       "type": "shell",
       "command": "pwsh",
       "args": [
@@ -174,7 +168,7 @@
       "problemMatcher": []
     },
     {
-      "label": "Agent: Open AGENT_README",
+      "label": "Agent: Open AGENT_README (workspace)",
       "type": "shell",
       "command": "pwsh",
       "args": [
