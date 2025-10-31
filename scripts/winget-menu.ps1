@@ -81,6 +81,7 @@ function Show-Menu($count) {
     Write-Host "`nActions:`n" -ForegroundColor Cyan
     Write-Host "0  Refresh list"
     Write-Host "s  Search and install a package"
+    Write-Host "g  GitHub Actions runs"
     Write-Host "q  Quit"
     Write-Host "Or enter package number to manage that package (upgrade/uninstall/details).`n"
 }
@@ -134,6 +135,26 @@ function Search-And-Install() {
     Run-Command "winget install --id `"$($pkg.Id)`" --accept-package-agreements --accept-source-agreements"
 }
 
+function Show-GitHubActionsRuns() {
+    Clear-Host
+    Write-Host "GitHub Actions Runs" -ForegroundColor Green
+    Write-Host "`nFetching recent runs...`n" -ForegroundColor Cyan
+    
+    # gh run list --repo TLHarnden630/legendary-enigma --limit 5
+    Run-Command "gh run list --repo TLHarnden630/legendary-enigma --limit 5"
+    
+    Write-Host "`nTo watch a specific run, use:" -ForegroundColor Yellow
+    Write-Host "gh run watch --repo TLHarnden630/legendary-enigma <run_id>" -ForegroundColor Cyan
+    Write-Host "`nExample: gh run watch --repo TLHarnden630/legendary-enigma 123456" -ForegroundColor Gray
+    
+    $runId = Read-Host -Prompt "`nEnter run ID to watch (or press Enter to go back)"
+    if ($runId -and $runId -match '^\d+$') {
+        # Watch a run (replace 123456 with the run id):
+        # gh run watch --repo TLHarnden630/legendary-enigma 123456
+        Run-Command "gh run watch --repo TLHarnden630/legendary-enigma $runId"
+    }
+}
+
 # Main loop
 while ($true) {
     $list = Get-WingetListJson
@@ -148,6 +169,7 @@ while ($true) {
     $choice = Read-Host -Prompt 'Selection'
     if ($choice -eq 'q') { break }
     if ($choice -eq 's') { Search-And-Install; continue }
+    if ($choice -eq 'g') { Show-GitHubActionsRuns; continue }
     if ($choice -eq '0') { continue }
     if (-not [int]::TryParse($choice, [ref]$null)) { Write-Host "Invalid selection" -ForegroundColor Red; Start-Sleep -Seconds 1; continue }
     $idx = [int]$choice - 1
