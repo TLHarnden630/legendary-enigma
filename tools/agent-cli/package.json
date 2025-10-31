@@ -1,0 +1,15 @@
+{
+  "name": "agent-cli",
+  "version": "0.1.0",
+  "description": "Minimal agent CLI placeholder",
+  "main": "bin/agent.js",
+  "bin": {
+    "agent": "bin/agent.js"
+  },
+  "scripts": {
+    "test": "echo \"No tests configured\" && exit 0"
+  },
+  "engines": {
+    "node": ">=14"
+  }
+}
