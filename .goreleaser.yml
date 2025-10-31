@@ -17,8 +17,18 @@ archives:
     files:
       - LICENSE
       - README.md
+      - dist/node-agent/**
     replacements:
       darwin: macOS
+
+checksum:
+  name_template: 'checksums.txt'
+  algorithm: sha256
+
+signs:
+  - artifacts: all
+    cmd: "gpg --batch --yes --pinentry-mode loopback --passphrase $GPG_PASSPHRASE --detach-sign -a {{ .ArtifactPath }}"
+    # Note: the CI must import a GPG private key and set GPG_PASSPHRASE as a secret for signing to work.
 
 release:
   github:
