@@ -1,0 +1,26 @@
+project_name: agen
+
+builds:
+  - id: agen
+    main: ./tools/agen/cmd/agen
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - amd64
+    binary: agen
+
+archives:
+  - id: default
+    format: tar.gz
+    files:
+      - LICENSE
+      - README.md
+    replacements:
+      darwin: macOS
+
+release:
+  github:
+    owner: TLHarnden630
+    name: legendary-enigma
